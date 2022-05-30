@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="icon" href="/favicon.ico">
+
+  <title>
+    1. Brbbot.exe - Full Analysis - CHROLLO BLOG!
+  </title>
+
+  <meta name="description" content="This is a fairly simple malware sample that can be a great start for beginners in Malware Analysis! As it combains different kinds of techniques and at the same time a simple implementation, So let&rsquo;s start digging into it! 🔥.
+Extracting Strings I prefer always to start by viewing the strings as it gives me a general insight on what this sample is doing the information we get from this screenshot is that:" /><meta name="generator" content="Hugo 0.96.0" />
+
+  <link rel="stylesheet" href="https://0xchrollo.github.io/css/main.css" />
+
+  
+  
+
+  <meta property="og:title" content="1. Brbbot.exe - Full Analysis" />
+<meta property="og:description" content="This is a fairly simple malware sample that can be a great start for beginners in Malware Analysis! As it combains different kinds of techniques and at the same time a simple implementation, So let&rsquo;s start digging into it! 🔥.
+Extracting Strings I prefer always to start by viewing the strings as it gives me a general insight on what this sample is doing the information we get from this screenshot is that:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://0xchrollo.github.io/articles/brbbbot/" /><meta property="og:image" content="https://0xchrollo.github.io/img/malware%20analysis.jpg" /><meta property="article:section" content="Articles" />
+<meta property="article:published_time" content="2022-05-29T14:35:18-04:00" />
+<meta property="article:modified_time" content="2022-05-29T14:35:18-04:00" />
+
+
+
+  <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://0xchrollo.github.io/img/malware%20analysis.jpg"/>
+
+<meta name="twitter:title" content="1. Brbbot.exe - Full Analysis"/>
+<meta name="twitter:description" content="This is a fairly simple malware sample that can be a great start for beginners in Malware Analysis! As it combains different kinds of techniques and at the same time a simple implementation, So let&rsquo;s start digging into it! 🔥.
+Extracting Strings I prefer always to start by viewing the strings as it gives me a general insight on what this sample is doing the information we get from this screenshot is that:"/>
+
+
+  <meta itemprop="name" content="1. Brbbot.exe - Full Analysis">
+<meta itemprop="description" content="This is a fairly simple malware sample that can be a great start for beginners in Malware Analysis! As it combains different kinds of techniques and at the same time a simple implementation, So let&rsquo;s start digging into it! 🔥.
+Extracting Strings I prefer always to start by viewing the strings as it gives me a general insight on what this sample is doing the information we get from this screenshot is that:"><meta itemprop="datePublished" content="2022-05-29T14:35:18-04:00" />
+<meta itemprop="dateModified" content="2022-05-29T14:35:18-04:00" />
+<meta itemprop="wordCount" content="835"><meta itemprop="image" content="https://0xchrollo.github.io/img/malware%20analysis.jpg">
+<meta itemprop="keywords" content="" />
+
+  <meta itemprop="name" content="1. Brbbot.exe - Full Analysis">
+<meta itemprop="description" content="This is a fairly simple malware sample that can be a great start for beginners in Malware Analysis! As it combains different kinds of techniques and at the same time a simple implementation, So let&rsquo;s start digging into it! 🔥.
+Extracting Strings I prefer always to start by viewing the strings as it gives me a general insight on what this sample is doing the information we get from this screenshot is that:"><meta itemprop="datePublished" content="2022-05-29T14:35:18-04:00" />
+<meta itemprop="dateModified" content="2022-05-29T14:35:18-04:00" />
+<meta itemprop="wordCount" content="835"><meta itemprop="image" content="https://0xchrollo.github.io/img/malware%20analysis.jpg">
+<meta itemprop="keywords" content="" />
+</head><body class="flex relative h-full min-h-screen"><aside
+  class="will-change-transform transform transition-transform -translate-x-full absolute top-0 left-0 md:relative md:translate-x-0 w-3/4 md:w-60 h-full min-h-screen p-3 bg-slate-50 dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col gap-2.5 z-20 sidebar">
+  <p class="font-bold mb-5 flex items-center gap-2">
+    <button
+      aria-label="Close sidebar"
+      class="md:hidden menu-trigger-close p-1 rounded text-slate-800 dark:text-slate-50 hover:bg-slate-200 dark:hover:bg-slate-700"><svg class="h-6 w-6" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+  fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" />
+  <line x1="18" y1="6" x2="6" y2="18" />
+  <line x1="6" y1="6" x2="18" y2="18" />
+</svg></button>
+    <a href="https://0xchrollo.github.io/" class="px-2">
+      <span>CHROLLO BLOG!</span>
+    </a>
+    <button
+      aria-label="Toggle dark mode"
+      class="dark-mode-toggle p-2 rounded border dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700"><svg class="h-4 w-4" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+  fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" />
+  <circle cx="12" cy="12" r="4" />
+  <path d="M3 12h1M12 3v1M20 12h1M12 20v1M5.6 5.6l.7 .7M18.4 5.6l-.7 .7M17.7 17.7l.7 .7M6.3 17.7l-.7 .7" />
+</svg></button>
+  </p>
+
+  
+  <ul class="list-none flex flex-col gap-1">
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm flex items-center justify-between  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="/" >
+        <span>Home</span>
+        
+      </a>
+    </li>
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm flex items-center justify-between  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="/articles" >
+        <span>Articles</span>
+        
+      </a>
+    </li>
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm flex items-center justify-between  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="/ctf" >
+        <span>CTF Writeups</span>
+        
+      </a>
+    </li>
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm flex items-center justify-between  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="/malwareanalysis" >
+        <span>Malware Analysis</span>
+        
+      </a>
+    </li>
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm flex items-center justify-between  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="/articles/pro" >
+        <span>About me</span>
+        
+      </a>
+    </li>
+    
+  </ul>
+
+  <div class="flex-1"></div>
+
+  
+
+  <ul class="list-none flex flex-wrap justify-center gap-1 pt-2 border-t border-slate-200 dark:border-slate-600">
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm block text-slate-800 dark:text-slate-50  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="https://twitter.com/ryodan0x" target="_blank" rel="noopener noreferrer">
+        <span class="sr-only">Twitter</span>
+        
+        <span><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+  stroke-linecap="round" stroke-linejoin="round">
+  <path
+    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />
+</svg></span>
+        
+      </a>
+    </li>
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm block text-slate-800 dark:text-slate-50  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="https://github.com/toka0x" target="_blank" rel="noopener noreferrer">
+        <span class="sr-only">GitHub</span>
+        
+        <span><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+  stroke-linecap="round" stroke-linejoin="round">
+  <path
+    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+</svg></span>
+        
+      </a>
+    </li>
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm block text-slate-800 dark:text-slate-50  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="https://www.linkedin.com/in/motawkkel-abdulrhman-a2263a1b2/" target="_blank" rel="noopener noreferrer">
+        <span class="sr-only">LinkedIn</span>
+        
+        <span><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+  stroke-linecap="round" stroke-linejoin="round">
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+  <rect x="2" y="9" width="4" height="12" />
+  <circle cx="4" cy="4" r="2" />
+</svg></span>
+        
+      </a>
+    </li>
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm block text-slate-800 dark:text-slate-50  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+        <span class="sr-only">Instagram</span>
+        
+        <span><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+  stroke-linecap="round" stroke-linejoin="round">
+  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+</svg></span>
+        
+      </a>
+    </li>
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm block text-slate-800 dark:text-slate-50  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="tooka172@gmail.com" target="_blank" rel="noopener noreferrer">
+        <span class="sr-only">Email</span>
+        
+        <span><svg class="h-4 w-4" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+  fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" />
+  <rect x="3" y="5" width="18" height="14" rx="2" />
+  <polyline points="3 7 12 13 21 7" />
+</svg></span>
+        
+      </a>
+    </li>
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm block text-slate-800 dark:text-slate-50  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="/articles/index.xml" target="_blank" rel="noopener noreferrer">
+        <span class="sr-only">RSS</span>
+        
+        <span><svg class="h-4 w-4" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+  fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" />
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg></span>
+        
+      </a>
+    </li>
+    
+  </ul>
+</aside>
+
+<div
+  class="fixed bg-slate-700 bg-opacity-5 transition duration-200 ease-in-out inset-0 z-10 pointer-events-auto md:hidden left-0 top-0 w-full h-full hidden menu-overlay">
+</div>
+
+<button
+  aria-label="Toggle Sidebar"
+  class="md:hidden absolute top-3 left-3 z-10 menu-trigger p-1 rounded text-slate-800 dark:text-slate-50 hover:bg-slate-100"><svg class="h-6 w-6" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+  fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" />
+  <line x1="4" y1="6" x2="20" y2="6" />
+  <line x1="4" y1="12" x2="20" y2="12" />
+  <line x1="4" y1="18" x2="16" y2="18" />
+</svg></button><div class="flex-1">
+
+<main class="h-screen overflow-y-auto">
+  <div class="px-6 py-20 w-full lg:w-[580px] mx-auto prose dark:prose-invert h-fit prose-img:mx-auto">
+
+    <h1>1. Brbbot.exe - Full Analysis</h1>
+    
+    <p class="text-sm text-slate-500 !mb-8">May 29, 2022</p>
+    
+
+    <p>This is a fairly simple malware sample that can be a great start for beginners in Malware Analysis!
+<br>
+As it combains different kinds of techniques and at the same time a simple implementation, So let&rsquo;s start digging into it! 🔥.</p>
+<h1 id="extracting-strings">Extracting Strings</h1>
+<p>I prefer always to start by viewing the strings as it gives me a general insight on what this sample is doing
+<img src="/img/brbbot1.png" alt="Screenshot1">
+the information we get from this screenshot is that:</p>
+<ol>
+<li>this malware might be doing some persistence by placing itself in <mark>Software\Microsoft\Windows\CurrentVersion\Run</mark> registry key.</li>
+<li><mark>Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)</mark> is a User-Agent so there might be a possible network activity.</li>
+<li><mark>Reg*</mark> WinAPIs shows that there is some registy activity.</li>
+<li><mark>Crypt*</mark> WinAPIs shows that there might be some encryption.</li>
+</ol>
+<h1 id="behaviour-analysis">Behaviour Analysis</h1>
+<p>let&rsquo;s start executing the sample and monitor it&rsquo;s HOST behaviours with ProcMon and ProcDOT.
+<img src="/img/brbbot2.png" alt="Screenshot2"></p>
+<p>loading the CSV from ProcMon into ProcDOT we can see two important events happening</p>
+<ol>
+<li>the sample moves itself to <mark>C:\Users\REM\AppData\Roaming</mark> with the same old name.</li>
+<li>the sample drops a file <mark>brbconfig.tmp</mark>.</li>
+</ol>
+<p>viewing the dropped file content we see that it is encrypted.
+<img src="/img/brbbot3.png" alt="Screenshot3"></p>
+<p>if you take a look at the brbbot.exe&rsquo;s resource section you&rsquo;ll understand where did this file came from.
+<img src="/img/brbbot4.png" alt="Screenshot4"></p>
+<p>let&rsquo;s fire wp wireshark and monitor this sample&rsquo;s network activity<br></p>
+<ul>
+<li><em>Note: Iam using FakeNet to simulate some network services</em>
+<img src="/img/brbbot5.png" alt="Screenshot5"></li>
+</ul>
+<p>we notice first looking at the packet number 3 a DNS query to resolve the hostname <mark>brb.3dtuts.by</mark> and this can be used as an IOC, we also see at packet number 8 an HTTP request to <mark>ads.php</mark> with some parameters, here is the full URL:</p>
+<pre tabindex="0"><code> /ads.php?i=10.0.2.15&amp;c=DESKTOP-2C3IQHO&amp;p=123f373e600822282f3e366028362828753e233e603828292828753e233e602c32353235322f753e233e603828292828753e233e602c323537343c3435753e233e60283e292d32383e28753e233e6037283a2828753e233e60282d383334282f753e233e603d34352f3f292d3334282f753e233e603d34352f3f292d3334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e603f2c36753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e600d193423083e292d32383e753e233e602d363a382f33372b753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60163e363429227b1834362b293e282832343560282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282b343437282d753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60083e382e29322f22133e3a372f33083e292d32383e753e233e60282d383334282f753e233e600d1c1a2e2f33083e292d32383e753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e6028323334282f753e233e60282d383334282f753e233e60282d383334282f753e233e602f3a28303334282f2c753e233e60282d383334282f753e233e60282d383334282f753e233e60382f3d363435753e233e603e232b3734293e29753e233e6008333e37371e232b3e29323e35383e1334282f753e233e60083e3a2938330e12753e233e60092e352f32363e192934303e29753e233e60092e352f32363e192934303e29753e233e60083e3a29383312353f3e233e29753e233e60282d383334282f753e233e60282d383334282f753e233e600d1934230f293a22753e233e60282d383334282f753e233e60282d383334282f753e233e600c36320b292d081e753e233e601a2b2b3732383a2f3234351d293a363e1334282f753e233e600c3235082f34293e751a2b2b753e233e60092e352f32363e192934303e29753e233e60092e352f32363e192934303e29753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e60282d383334282f753e233e603f37373334282f753e233e60282d383334282f753e233e60282d383334282f753e233e6028363a292f2838293e3e35753e233e60282d383334282f753e233e60282d383334282f753e233e601d3a303e153e2f753e233e603834353334282f753e233e60322b3834353d323c753e233e60393a38303c29342e353f0f3a28301334282f753e233e60083e3a2938330b29342f343834371334282f753e233e60083e3a2938331d32372f3e291334282f753e233e603f37373334282f753e233e603f37373334282f753e233e6039293939342f753e233e
+</code></pre><p><img src="/img/6.png" alt="Screenshot6"></p>
+<p>we see the User-Agent we&rsquo;ve collected from strings used here in this request.<br>
+also there are three parameters in this query:</p>
+<ol>
+<li><strong>i</strong>: which is clearly an IP address (our host&rsquo;s IP address).
+<img src="/img/brbbot7.png" alt="Screenshot7"></li>
+<li><strong>c</strong>: the hostname of our host.
+<img src="/img/brbbot8.png" alt="Screenshot8"></li>
+<li><strong>p</strong>: which is a long hex strem (if we tried to convert it to ASCII we won&rsquo;t understand anything, it might be encrypted).</li>
+</ol>
+<p>let&rsquo;s save this hex data to a file for further analysis.</p>
+<h1 id="code-analysis-fun-part">Code Analysis (FUN Part!🤩)</h1>
+<p>I always start my analysis with IDA from the strings window, firts as we saw before there is a resource section that is called CONFIG, let&rsquo;s find it in strings and see where is it used.
+<img src="/img/brbbot9.png" alt="Screenshot9"></p>
+<p>AHA! as we expected! this sample finds the resource named CONFIG then drops it to the disk under the name <mark>brbconfig.tmp</mark> (the encrypted file we saw before)
+the next step I would o is to try to decrypt the file content, as we also saw earlier there is a lot of Crypt* function in this sample, let&rsquo;s look for them in the imports and examine the code.
+<img src="/img/brbbot10.png" alt="Screenshot10">
+<img src="/img/brbbot11.png" alt="Screenshot11">
+first we see that it opens a handle to <em>brbconfig.tmp</em> into v5 and v6.<br>
+next we see a group of cryptographic functions that sets the key and algorithm for decryption.<br>
+then at line 57 it reads the content of the file v5 into the buffer v14 (which is allocated in Heap).<br>
+next if <mark>ReadFile</mark> is successfull and the number of bytes to read is less than 1000 bytes it will call <mark>CryptDecrypt</mark> with the key that was previously crafted.</p>
+<p>what we need to know now are two things:</p>
+<ol>
+<li>what algorithm is used for encryption?.</li>
+<li>what is the key of encryption?.</li>
+</ol>
+<p>to get the answer of those two question we have to analyse the cryptography functions.
+the three important functions we have to take a look at are:</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> CryptCreateHash<br>
+a good place to search for information about any WinAPI function is MSDN, so looking at the function&rsquo;s documentation <a href="https://docs.microsoft.com/en-us/windows/win32/api/wincrypt/nf-wincrypt-cryptcreatehash"  target="_blank" rel="noopener" >here</a> we see the following:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C++" data-lang="C++"><span style="display:flex;"><span>BOOL <span style="color:#50fa7b">CryptCreateHash</span>(
+</span></span><span style="display:flex;"><span>  [in]  HCRYPTPROV hProv,
+</span></span><span style="display:flex;"><span>  [in]  ALG_ID     Algid,
+</span></span><span style="display:flex;"><span>  [in]  HCRYPTKEY  hKey,
+</span></span><span style="display:flex;"><span>  [in]  DWORD      dwFlags,
+</span></span><span style="display:flex;"><span>  [out] HCRYPTHASH <span style="color:#ff79c6">*</span>phHash
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><p>So what&rsquo;s important for us now is the second argument <mark>Algid</mark> which has a value of <strong>0x8003</strong>, reveiwng MSDN again for the Algid we see that it is MD5 Algorithm.
+<img src="/img/brbbot12.png" alt="Screenshot12"></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> CryptHashData<br></li>
+</ul>
+<p>Again we review the function&rsquo;s definition in MSDN:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C++" data-lang="C++"><span style="display:flex;"><span>BOOL <span style="color:#50fa7b">CryptHashData</span>(
+</span></span><span style="display:flex;"><span>  [in] HCRYPTHASH hHash,
+</span></span><span style="display:flex;"><span>  [in] <span style="color:#ff79c6">const</span> BYTE <span style="color:#ff79c6">*</span>pbData,
+</span></span><span style="display:flex;"><span>  [in] DWORD      dwDataLen,
+</span></span><span style="display:flex;"><span>  [in] DWORD      dwFlags
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><p>this time we are interested in the <mark>pbData</mark> parameter which is in oure case the string <code>YnJiYm90</code>.</p>
+<p><em>notice that hHash parameter is the return value from <mark>CryptCreateHash</mark>.</em></p>
+<p>so the coclution of the two functions analysis is that an MD5 hash from the string <code>YnJiYm90</code> will be created.</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> CryptDeriveKey</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C++" data-lang="C++"><span style="display:flex;"><span>BOOL <span style="color:#50fa7b">CryptDeriveKey</span>(
+</span></span><span style="display:flex;"><span>  [in]      HCRYPTPROV hProv,
+</span></span><span style="display:flex;"><span>  [in]      ALG_ID     Algid,
+</span></span><span style="display:flex;"><span>  [in]      HCRYPTHASH hBaseData,
+</span></span><span style="display:flex;"><span>  [in]      DWORD      dwFlags,
+</span></span><span style="display:flex;"><span>  [in, out] HCRYPTKEY  <span style="color:#ff79c6">*</span>phKey
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><p>this function will generate the decryption key (<mark>phKey</mark>), the Algid here represents the decryption algorithm used and since in our case it holds <strong>0x6801</strong>
+we can serach MSDN for it.
+<img src="/img/brbbot13.png" alt="Screenshot13">
+NICE! so it&rsquo;s RC4, but what is the key?
+As this function recieves a handle to a hash object created by <mark>CryptHasahData</mark> it generates the key based on this hash (for further information review MMSDN&rsquo;s documentation)</p>
+<p>So our key will be the MD5 hash of <code>YnJiYm90</code></p>
+<pre tabindex="0"><code>e2834a5bba1c28b7f536bd3ec5f1d8e0
+</code></pre><p>and our decryption algorithm is RC4.
+let&rsquo;s fire up CyberChef and verify our results 👀.
+<img src="/img/brbconfig14.png" alt="Screenshot14">
+AND indeed we decrypted the file!</p>
+<pre tabindex="0"><code>uri=ads.php;exec=cexe;file=elif;conf=fnoc;exit=tixe;encode=5b;sleep=30000
+</code></pre>
+  </div>
+</main>
+
+
+  </div>
+<script type="text/javascript" src="/main.js" defer></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-PROPERTY_ID', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+</body>
+
+</html>

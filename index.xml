@@ -8,16 +8,26 @@
     <language>en-us</language>
     <lastBuildDate>Sun, 29 May 2022 13:47:28 -0400</lastBuildDate><atom:link href="https://0xchrollo.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Pro</title>
-      <link>https://0xchrollo.github.io/articles/pro/</link>
+      <title>1. Brbbot.exe - Full Analysis</title>
+      <link>https://0xchrollo.github.io/articles/brbbbot/</link>
       <pubDate>Sun, 29 May 2022 14:35:18 -0400</pubDate>
       
-      <guid>https://0xchrollo.github.io/articles/pro/</guid>
-      <description>this is my protofolio!</description>
+      <guid>https://0xchrollo.github.io/articles/brbbbot/</guid>
+      <description>This is a fairly simple malware sample that can be a great start for beginners in Malware Analysis! As it combains different kinds of techniques and at the same time a simple implementation, So let&amp;rsquo;s start digging into it! 🔥.
+Extracting Strings I prefer always to start by viewing the strings as it gives me a general insight on what this sample is doing the information we get from this screenshot is that:</description>
     </item>
     
     <item>
-      <title>News</title>
+      <title>2. ctf</title>
+      <link>https://0xchrollo.github.io/articles/ctf/</link>
+      <pubDate>Sun, 29 May 2022 14:35:18 -0400</pubDate>
+      
+      <guid>https://0xchrollo.github.io/articles/ctf/</guid>
+      <description>this is ctf</description>
+    </item>
+    
+    <item>
+      <title>3. News</title>
       <link>https://0xchrollo.github.io/articles/news/</link>
       <pubDate>Sun, 29 May 2022 11:07:43 -0400</pubDate>
       
