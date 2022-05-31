@@ -8,31 +8,27 @@
     <language>en-us</language>
     <lastBuildDate>Sun, 29 May 2022 13:47:28 -0400</lastBuildDate><atom:link href="https://0xchrollo.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>1. Brbbot.exe - Full Analysis</title>
+      <title>1. BRBBOT - In depth analysis</title>
       <link>https://0xchrollo.github.io/articles/brbbbot/</link>
       <pubDate>Sun, 29 May 2022 14:35:18 -0400</pubDate>
       
       <guid>https://0xchrollo.github.io/articles/brbbbot/</guid>
-      <description>This is a fairly simple malware sample that can be a great start for beginners in Malware Analysis! As it combains different kinds of techniques and at the same time a simple implementation, So let&amp;rsquo;s start digging into it! 🔥.
+      <description>Sample:
+F47060D0F7DE5EE651878EB18DD2D24B5003BDB03EF4F49879F448F05034A21E This is a fairly simple malware sample that can be a great start for beginners in Malware Analysis! As it combines different kinds of techniques and at the same time a simple implementation, So let&amp;rsquo;s start digging into it! 🔥.
 Extracting Strings I prefer always to start by viewing the strings as it gives me a general insight on what this sample is doing the information we get from this screenshot is that:</description>
     </item>
     
     <item>
-      <title>2. ctf</title>
-      <link>https://0xchrollo.github.io/articles/ctf/</link>
+      <title>About me</title>
+      <link>https://0xchrollo.github.io/profile/</link>
       <pubDate>Sun, 29 May 2022 14:35:18 -0400</pubDate>
       
-      <guid>https://0xchrollo.github.io/articles/ctf/</guid>
-      <description>this is ctf</description>
-    </item>
-    
-    <item>
-      <title>3. News</title>
-      <link>https://0xchrollo.github.io/articles/news/</link>
-      <pubDate>Sun, 29 May 2022 11:07:43 -0400</pubDate>
-      
-      <guid>https://0xchrollo.github.io/articles/news/</guid>
-      <description>AHHHHHHHHHHHH I want to aneeeeeeeeeeeek NEAMA BIT HAJR</description>
+      <guid>https://0xchrollo.github.io/profile/</guid>
+      <description>Hello World!   My name is Motawkkel. Iam from SUDAN.
+ A third year college student.
+ I Studay at SUST [Electrical Engineering]
+    I am currently working as a Cyber Securiy Analysit @ CyberTalents. Mainly skilled at DFIR &amp;amp; Malware Analysis.
+ </description>
     </item>
     
   </channel>

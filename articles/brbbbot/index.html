@@ -8,10 +8,11 @@
   <link rel="icon" href="/favicon.ico">
 
   <title>
-    1. Brbbot.exe - Full Analysis - CHROLLO BLOG!
+    1. BRBBOT - In depth analysis - CHROLLO BLOG!
   </title>
 
-  <meta name="description" content="This is a fairly simple malware sample that can be a great start for beginners in Malware Analysis! As it combains different kinds of techniques and at the same time a simple implementation, So let&rsquo;s start digging into it! 🔥.
+  <meta name="description" content="Sample:
+F47060D0F7DE5EE651878EB18DD2D24B5003BDB03EF4F49879F448F05034A21E This is a fairly simple malware sample that can be a great start for beginners in Malware Analysis! As it combines different kinds of techniques and at the same time a simple implementation, So let&rsquo;s start digging into it! 🔥.
 Extracting Strings I prefer always to start by viewing the strings as it gives me a general insight on what this sample is doing the information we get from this screenshot is that:" /><meta name="generator" content="Hugo 0.96.0" />
 
   <link rel="stylesheet" href="https://0xchrollo.github.io/css/main.css" />
@@ -19,8 +20,9 @@ Extracting Strings I prefer always to start by viewing the strings as it gives m
   
   
 
-  <meta property="og:title" content="1. Brbbot.exe - Full Analysis" />
-<meta property="og:description" content="This is a fairly simple malware sample that can be a great start for beginners in Malware Analysis! As it combains different kinds of techniques and at the same time a simple implementation, So let&rsquo;s start digging into it! 🔥.
+  <meta property="og:title" content="1. BRBBOT - In depth analysis" />
+<meta property="og:description" content="Sample:
+F47060D0F7DE5EE651878EB18DD2D24B5003BDB03EF4F49879F448F05034A21E This is a fairly simple malware sample that can be a great start for beginners in Malware Analysis! As it combines different kinds of techniques and at the same time a simple implementation, So let&rsquo;s start digging into it! 🔥.
 Extracting Strings I prefer always to start by viewing the strings as it gives me a general insight on what this sample is doing the information we get from this screenshot is that:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://0xchrollo.github.io/articles/brbbbot/" /><meta property="og:image" content="https://0xchrollo.github.io/img/malware%20analysis.jpg" /><meta property="article:section" content="Articles" />
@@ -32,23 +34,26 @@ Extracting Strings I prefer always to start by viewing the strings as it gives m
   <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://0xchrollo.github.io/img/malware%20analysis.jpg"/>
 
-<meta name="twitter:title" content="1. Brbbot.exe - Full Analysis"/>
-<meta name="twitter:description" content="This is a fairly simple malware sample that can be a great start for beginners in Malware Analysis! As it combains different kinds of techniques and at the same time a simple implementation, So let&rsquo;s start digging into it! 🔥.
+<meta name="twitter:title" content="1. BRBBOT - In depth analysis"/>
+<meta name="twitter:description" content="Sample:
+F47060D0F7DE5EE651878EB18DD2D24B5003BDB03EF4F49879F448F05034A21E This is a fairly simple malware sample that can be a great start for beginners in Malware Analysis! As it combines different kinds of techniques and at the same time a simple implementation, So let&rsquo;s start digging into it! 🔥.
 Extracting Strings I prefer always to start by viewing the strings as it gives me a general insight on what this sample is doing the information we get from this screenshot is that:"/>
 
 
-  <meta itemprop="name" content="1. Brbbot.exe - Full Analysis">
-<meta itemprop="description" content="This is a fairly simple malware sample that can be a great start for beginners in Malware Analysis! As it combains different kinds of techniques and at the same time a simple implementation, So let&rsquo;s start digging into it! 🔥.
+  <meta itemprop="name" content="1. BRBBOT - In depth analysis">
+<meta itemprop="description" content="Sample:
+F47060D0F7DE5EE651878EB18DD2D24B5003BDB03EF4F49879F448F05034A21E This is a fairly simple malware sample that can be a great start for beginners in Malware Analysis! As it combines different kinds of techniques and at the same time a simple implementation, So let&rsquo;s start digging into it! 🔥.
 Extracting Strings I prefer always to start by viewing the strings as it gives me a general insight on what this sample is doing the information we get from this screenshot is that:"><meta itemprop="datePublished" content="2022-05-29T14:35:18-04:00" />
 <meta itemprop="dateModified" content="2022-05-29T14:35:18-04:00" />
-<meta itemprop="wordCount" content="835"><meta itemprop="image" content="https://0xchrollo.github.io/img/malware%20analysis.jpg">
+<meta itemprop="wordCount" content="1464"><meta itemprop="image" content="https://0xchrollo.github.io/img/malware%20analysis.jpg">
 <meta itemprop="keywords" content="" />
 
-  <meta itemprop="name" content="1. Brbbot.exe - Full Analysis">
-<meta itemprop="description" content="This is a fairly simple malware sample that can be a great start for beginners in Malware Analysis! As it combains different kinds of techniques and at the same time a simple implementation, So let&rsquo;s start digging into it! 🔥.
+  <meta itemprop="name" content="1. BRBBOT - In depth analysis">
+<meta itemprop="description" content="Sample:
+F47060D0F7DE5EE651878EB18DD2D24B5003BDB03EF4F49879F448F05034A21E This is a fairly simple malware sample that can be a great start for beginners in Malware Analysis! As it combines different kinds of techniques and at the same time a simple implementation, So let&rsquo;s start digging into it! 🔥.
 Extracting Strings I prefer always to start by viewing the strings as it gives me a general insight on what this sample is doing the information we get from this screenshot is that:"><meta itemprop="datePublished" content="2022-05-29T14:35:18-04:00" />
 <meta itemprop="dateModified" content="2022-05-29T14:35:18-04:00" />
-<meta itemprop="wordCount" content="835"><meta itemprop="image" content="https://0xchrollo.github.io/img/malware%20analysis.jpg">
+<meta itemprop="wordCount" content="1464"><meta itemprop="image" content="https://0xchrollo.github.io/img/malware%20analysis.jpg">
 <meta itemprop="keywords" content="" />
 </head><body class="flex relative h-full min-h-screen"><aside
   class="will-change-transform transform transition-transform -translate-x-full absolute top-0 left-0 md:relative md:translate-x-0 w-3/4 md:w-60 h-full min-h-screen p-3 bg-slate-50 dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col gap-2.5 z-20 sidebar">
@@ -95,23 +100,7 @@ Extracting Strings I prefer always to start by viewing the strings as it gives m
     
     <li>
       <a class="px-2 py-1.5 rounded-md text-sm flex items-center justify-between  hover:bg-slate-200 dark:hover:bg-slate-700 "
-        href="/ctf" >
-        <span>CTF Writeups</span>
-        
-      </a>
-    </li>
-    
-    <li>
-      <a class="px-2 py-1.5 rounded-md text-sm flex items-center justify-between  hover:bg-slate-200 dark:hover:bg-slate-700 "
-        href="/malwareanalysis" >
-        <span>Malware Analysis</span>
-        
-      </a>
-    </li>
-    
-    <li>
-      <a class="px-2 py-1.5 rounded-md text-sm flex items-center justify-between  hover:bg-slate-200 dark:hover:bg-slate-700 "
-        href="/articles/pro" >
+        href="/profile" >
         <span>About me</span>
         
       </a>
@@ -234,14 +223,16 @@ Extracting Strings I prefer always to start by viewing the strings as it gives m
 <main class="h-screen overflow-y-auto">
   <div class="px-6 py-20 w-full lg:w-[580px] mx-auto prose dark:prose-invert h-fit prose-img:mx-auto">
 
-    <h1>1. Brbbot.exe - Full Analysis</h1>
+    <h1>1. BRBBOT - In depth analysis</h1>
     
     <p class="text-sm text-slate-500 !mb-8">May 29, 2022</p>
     
 
-    <p>This is a fairly simple malware sample that can be a great start for beginners in Malware Analysis!
+    <p>Sample:</p>
+<pre tabindex="0"><code>F47060D0F7DE5EE651878EB18DD2D24B5003BDB03EF4F49879F448F05034A21E
+</code></pre><p>This is a fairly simple malware sample that can be a great start for beginners in Malware Analysis!
 <br>
-As it combains different kinds of techniques and at the same time a simple implementation, So let&rsquo;s start digging into it! 🔥.</p>
+As it combines different kinds of techniques and at the same time a simple implementation, So let&rsquo;s start digging into it! 🔥.</p>
 <h1 id="extracting-strings">Extracting Strings</h1>
 <p>I prefer always to start by viewing the strings as it gives me a general insight on what this sample is doing
 <img src="/img/brbbot1.png" alt="Screenshot1">
@@ -249,11 +240,11 @@ the information we get from this screenshot is that:</p>
 <ol>
 <li>this malware might be doing some persistence by placing itself in <mark>Software\Microsoft\Windows\CurrentVersion\Run</mark> registry key.</li>
 <li><mark>Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)</mark> is a User-Agent so there might be a possible network activity.</li>
-<li><mark>Reg*</mark> WinAPIs shows that there is some registy activity.</li>
+<li><mark>Reg*</mark> WinAPIs shows that there is some registry activity.</li>
 <li><mark>Crypt*</mark> WinAPIs shows that there might be some encryption.</li>
 </ol>
 <h1 id="behaviour-analysis">Behaviour Analysis</h1>
-<p>let&rsquo;s start executing the sample and monitor it&rsquo;s HOST behaviours with ProcMon and ProcDOT.
+<p>let&rsquo;s start executing the sample and monitor its HOST behaviours with ProcMon and ProcDOT.
 <img src="/img/brbbot2.png" alt="Screenshot2"></p>
 <p>loading the CSV from ProcMon into ProcDOT we can see two important events happening</p>
 <ol>
@@ -286,19 +277,19 @@ also there are three parameters in this query:</p>
 <p>I always start my analysis with IDA from the strings window, firts as we saw before there is a resource section that is called CONFIG, let&rsquo;s find it in strings and see where is it used.
 <img src="/img/brbbot9.png" alt="Screenshot9"></p>
 <p>AHA! as we expected! this sample finds the resource named CONFIG then drops it to the disk under the name <mark>brbconfig.tmp</mark> (the encrypted file we saw before)
-the next step I would o is to try to decrypt the file content, as we also saw earlier there is a lot of Crypt* function in this sample, let&rsquo;s look for them in the imports and examine the code.
+the next step I would do is to try to decrypt the file content, as we also saw earlier there is a lot of Crypt* function in this sample, let&rsquo;s look for them in the imports and examine the code.
 <img src="/img/brbbot10.png" alt="Screenshot10">
 <img src="/img/brbbot11.png" alt="Screenshot11">
 first we see that it opens a handle to <em>brbconfig.tmp</em> into v5 and v6.<br>
 next we see a group of cryptographic functions that sets the key and algorithm for decryption.<br>
 then at line 57 it reads the content of the file v5 into the buffer v14 (which is allocated in Heap).<br>
-next if <mark>ReadFile</mark> is successfull and the number of bytes to read is less than 1000 bytes it will call <mark>CryptDecrypt</mark> with the key that was previously crafted.</p>
+next if <mark>ReadFile</mark> is successful and the number of bytes to read is less than 1000 bytes it will call <mark>CryptDecrypt</mark> with the key that was previously crafted.</p>
 <p>what we need to know now are two things:</p>
 <ol>
 <li>what algorithm is used for encryption?.</li>
 <li>what is the key of encryption?.</li>
 </ol>
-<p>to get the answer of those two question we have to analyse the cryptography functions.
+<p>to get the answer of those two questions we have to analyse the cryptography functions.
 the three important functions we have to take a look at are:</p>
 <ul>
 <li><input checked="" disabled="" type="checkbox"> CryptCreateHash<br>
@@ -340,7 +331,7 @@ a good place to search for information about any WinAPI function is MSDN, so loo
 we can serach MSDN for it.
 <img src="/img/brbbot13.png" alt="Screenshot13">
 NICE! so it&rsquo;s RC4, but what is the key?
-As this function recieves a handle to a hash object created by <mark>CryptHasahData</mark> it generates the key based on this hash (for further information review MMSDN&rsquo;s documentation)</p>
+As this function recieves a handle to a hash object created by <mark>CryptHasahData</mark> it generates the key based on this hash (for further information review MSDN&rsquo;s documentation)</p>
 <p>So our key will be the MD5 hash of <code>YnJiYm90</code></p>
 <pre tabindex="0"><code>e2834a5bba1c28b7f536bd3ec5f1d8e0
 </code></pre><p>and our decryption algorithm is RC4.
@@ -348,7 +339,67 @@ let&rsquo;s fire up CyberChef and verify our results 👀.
 <img src="/img/brbconfig14.png" alt="Screenshot14">
 AND indeed we decrypted the file!</p>
 <pre tabindex="0"><code>uri=ads.php;exec=cexe;file=elif;conf=fnoc;exit=tixe;encode=5b;sleep=30000
-</code></pre>
+</code></pre><p>now let&rsquo;s reaname this function to <em>decrypt_brbconf</em> and move on with our analysis
+the next step is to know how is this data used in the sample, for that we can see cross-references to <em>decryptbrbconf</em> function and start analysing from there.
+<img src="/img/brbbot15.png" alt="Screenshot15"></p>
+<p>in the above screenshot we can see that <em>decrypt_brbconf</em> is executed and it will return the buffer containing the configuration data in the <strong>Src</strong> Parameter,then the variable is used several time as a parameter to the function <strong>sub_7ff709751000</strong></p>
+<p>I did a quick dynamic analysis of the function output and noticed that it parses the config string and looks for the value of the third parameter passed to it and extracts it to the last parameter, for example when the third parameter is <strong>uri</strong> the function will extract <strong>ads.php</strong> (because in the config we see uri=ads.php).</p>
+<p>let&rsquo;s rename the variables based on their values and continue with the analysis.</p>
+<p>next I investigated the call to <mark>HttpOpenRequestA</mark> and came up with the request function.
+<img src="/img/brbbot16.png" alt="Screenshot16"></p>
+<p>If we move back to see the cross-references and locate the subdomain value we see that it is obtained by XORing the value &ldquo;#3#or%5452o#8A&rdquo; with 0x41 (becomes: brb.3dtuts.by.)
+<img src="/img/brbbot17.png" alt="Screenshot17">
+Also in the same function we can see the parameters being assigned.
+<img src="/img/brbbot18.png" alt="Screenshot18">
+<img src="/img/brbbot19.png" alt="Screenshot19"></p>
+<p>We are only interested in the last parameter which is v5 as it will contain our encoded hex data.
+so let&rsquo;s move back and see where does this varible gets assigned.</p>
+<p><img src="/img/brbbot20.png" alt="Screenshot20"></p>
+<p>In the above screenshot we see that v5=v15 and v15 is a memory address in heap.</p>
+<p>next we see that v17=v15 so now we have v5, v17, v15 all with the same pointer address.</p>
+<p>we also see that <mark>sprintf</mark> prints some hex data pointed to by v16 into v17.</p>
+<p>v16=v8, let&rsquo;s go back and see v8</p>
+<ul>
+<li>Note: there are a lot of assigns and &ldquo;=&rdquo; signs for the purpose of obfuscating the code.</li>
+</ul>
+<p><img src="/img/brbconf21.png" alt="Screenshot21"></p>
+<p>v8 = lpMem but lpMem is passed as a parameter for the function <mark>sub_7ff70975330</mark>, let&rsquo;s decompile the function and analyse it.
+<img src="/img/brbbot22.png" alt="Screenshot22">
+what happens in this function is:</p>
+<ol>
+<li>it obtains a handle to <mark>ntdll.dll</mark>.</li>
+<li>it resolves <mark>ZwQuerySystemInformatin</mark> address from NTDLL.</li>
+<li>it calls <mark>ZwQuerySystemInformatin</mark>.</li>
+</ol>
+<p><mark>ZwQuerySystemInformatin</mark> can be used to get different system information like basic system information and processors information etc.</p>
+<p>but how can we determine what information it is trying to collect here? the answer is: by seeing the first argument <strong>SystemInformationClass</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C++" data-lang="C++"><span style="display:flex;"><span>NTSTATUS WINAPI <span style="color:#50fa7b">ZwQuerySystemInformation</span>(
+</span></span><span style="display:flex;"><span>  _In_      SYSTEM_INFORMATION_CLASS SystemInformationClass,
+</span></span><span style="display:flex;"><span>  _Inout_   PVOID                    SystemInformation,
+</span></span><span style="display:flex;"><span>  _In_      ULONG                    SystemInformationLength,
+</span></span><span style="display:flex;"><span>  _Out_opt_ PULONG                   ReturnLength
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><p>In our case it is 0x05 so if we googled it we can determine what type of information it wants:
+<img src="/img/brbbot23.png" alt="Screenshot23">
+0x05 is the value of <strong>SystemProcessInformation</strong></p>
+<p>so now we can cearly say that the hex data that was sent is just the processes on the system.</p>
+<p>but how was it encrypted?</p>
+<p>let&rsquo;s get out of this function and move a step back to <mark>sub_7ff709751c10</mark> we see lpMem assigned to v13 then v13 is XORed with some value.
+<img src="/img/brbbot24.png" alt="Screenshot24"></p>
+<p>in order to know the XOR key we have to know the parameter <mark>a1</mark> address then add 0x514 and the value we get will be our XOR key.</p>
+<p><img src="/img/brbbot25.png" alt="Screenshot25">
+the first parameter is the address <mark>&amp;unk_7ff709764560</mark>, if we tried to view it we will get nothing because it gets its value during the execution time, we can easily put a breakpoint on this line then see what value it holds.
+<img src="/img/brbbot26.png" alt="Screenshot26"></p>
+<p>the address starts at 0x00007FF709764560 but our key is at this address + 0x514 = 0x7ff709764a74.
+<img src="/img/brbbot27.png" alt="Screenshot27"></p>
+<p>COOL! 0x5b ! we got the key.</p>
+<ul>
+<li>Note: remember that in the config we decrypeted before we saw encode=5b (that was obviously the decryption key but it is always more fun to figure it out by code analysis 🤣).</li>
+</ul>
+<p>And now let&rsquo;s come back to the hex data we saved and decrypt it with CyberChef.
+<img src="/img/brbbot29.png" alt="Screenshot29"></p>
+<p>names of processes? that was expected!.</p>
+
   </div>
 </main>
 
