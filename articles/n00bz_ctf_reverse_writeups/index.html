@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="icon" href="/favicon.ico">
+
+  <title>
+    N00bz CTF-Reverse Engineering-writeups - CHROLLO BLOG!
+  </title>
+
+  <meta name="description" content="Challenge 01- xorxorxor this is an ELF file that asks for the flag when we execute it: let&rsquo;s use IDA to decompile and see how the flag is checked.
+as we can see above, it will do the steps:
+ read up to 23 characters (length of the flag&#43;1). uses var_4 as a counter that is incremented every time and XORed with a flag character. compares the final string with the string n12a~~~7zV;xSyf&lt;Os!" /><meta name="generator" content="Hugo 0.96.0" />
+
+  <link rel="stylesheet" href="https://0xchrollo.github.io/css/main.css" />
+
+  
+  
+
+  <meta property="og:title" content="N00bz CTF-Reverse Engineering-writeups" />
+<meta property="og:description" content="Challenge 01- xorxorxor this is an ELF file that asks for the flag when we execute it: let&rsquo;s use IDA to decompile and see how the flag is checked.
+as we can see above, it will do the steps:
+ read up to 23 characters (length of the flag&#43;1). uses var_4 as a counter that is incremented every time and XORed with a flag character. compares the final string with the string n12a~~~7zV;xSyf&lt;Os!" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://0xchrollo.github.io/articles/n00bz_ctf_reverse_writeups/" /><meta property="og:image" content="https://0xchrollo.github.io/img/writeup.jpg" /><meta property="article:section" content="Articles" />
+<meta property="article:published_time" content="2022-06-06T13:47:28-04:00" />
+<meta property="article:modified_time" content="2022-06-06T13:47:28-04:00" />
+
+
+
+  <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://0xchrollo.github.io/img/writeup.jpg"/>
+
+<meta name="twitter:title" content="N00bz CTF-Reverse Engineering-writeups"/>
+<meta name="twitter:description" content="Challenge 01- xorxorxor this is an ELF file that asks for the flag when we execute it: let&rsquo;s use IDA to decompile and see how the flag is checked.
+as we can see above, it will do the steps:
+ read up to 23 characters (length of the flag&#43;1). uses var_4 as a counter that is incremented every time and XORed with a flag character. compares the final string with the string n12a~~~7zV;xSyf&lt;Os!"/>
+
+
+  <meta itemprop="name" content="N00bz CTF-Reverse Engineering-writeups">
+<meta itemprop="description" content="Challenge 01- xorxorxor this is an ELF file that asks for the flag when we execute it: let&rsquo;s use IDA to decompile and see how the flag is checked.
+as we can see above, it will do the steps:
+ read up to 23 characters (length of the flag&#43;1). uses var_4 as a counter that is incremented every time and XORed with a flag character. compares the final string with the string n12a~~~7zV;xSyf&lt;Os!"><meta itemprop="datePublished" content="2022-06-06T13:47:28-04:00" />
+<meta itemprop="dateModified" content="2022-06-06T13:47:28-04:00" />
+<meta itemprop="wordCount" content="1575"><meta itemprop="image" content="https://0xchrollo.github.io/img/writeup.jpg">
+<meta itemprop="keywords" content="" />
+
+  <meta itemprop="name" content="N00bz CTF-Reverse Engineering-writeups">
+<meta itemprop="description" content="Challenge 01- xorxorxor this is an ELF file that asks for the flag when we execute it: let&rsquo;s use IDA to decompile and see how the flag is checked.
+as we can see above, it will do the steps:
+ read up to 23 characters (length of the flag&#43;1). uses var_4 as a counter that is incremented every time and XORed with a flag character. compares the final string with the string n12a~~~7zV;xSyf&lt;Os!"><meta itemprop="datePublished" content="2022-06-06T13:47:28-04:00" />
+<meta itemprop="dateModified" content="2022-06-06T13:47:28-04:00" />
+<meta itemprop="wordCount" content="1575"><meta itemprop="image" content="https://0xchrollo.github.io/img/writeup.jpg">
+<meta itemprop="keywords" content="" />
+</head><body class="flex relative h-full min-h-screen"><aside
+  class="will-change-transform transform transition-transform -translate-x-full absolute top-0 left-0 md:relative md:translate-x-0 w-3/4 md:w-60 h-full min-h-screen p-3 bg-slate-50 dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col gap-2.5 z-20 sidebar">
+  <p class="font-bold mb-5 flex items-center gap-2">
+    <button
+      aria-label="Close sidebar"
+      class="md:hidden menu-trigger-close p-1 rounded text-slate-800 dark:text-slate-50 hover:bg-slate-200 dark:hover:bg-slate-700"><svg class="h-6 w-6" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+  fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" />
+  <line x1="18" y1="6" x2="6" y2="18" />
+  <line x1="6" y1="6" x2="18" y2="18" />
+</svg></button>
+    <a href="https://0xchrollo.github.io/" class="px-2">
+      <span>CHROLLO BLOG!</span>
+    </a>
+    <button
+      aria-label="Toggle dark mode"
+      class="dark-mode-toggle p-2 rounded border dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700"><svg class="h-4 w-4" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+  fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" />
+  <circle cx="12" cy="12" r="4" />
+  <path d="M3 12h1M12 3v1M20 12h1M12 20v1M5.6 5.6l.7 .7M18.4 5.6l-.7 .7M17.7 17.7l.7 .7M6.3 17.7l-.7 .7" />
+</svg></button>
+  </p>
+
+  
+  <ul class="list-none flex flex-col gap-1">
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm flex items-center justify-between  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="/" >
+        <span>Home</span>
+        
+      </a>
+    </li>
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm flex items-center justify-between  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="/articles" >
+        <span>Articles</span>
+        
+      </a>
+    </li>
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm flex items-center justify-between  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="/profile" >
+        <span>About me</span>
+        
+      </a>
+    </li>
+    
+  </ul>
+
+  <div class="flex-1"></div>
+
+  
+
+  <ul class="list-none flex flex-wrap justify-center gap-1 pt-2 border-t border-slate-200 dark:border-slate-600">
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm block text-slate-800 dark:text-slate-50  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="https://twitter.com/ryodan0x" target="_blank" rel="noopener noreferrer">
+        <span class="sr-only">Twitter</span>
+        
+        <span><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+  stroke-linecap="round" stroke-linejoin="round">
+  <path
+    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />
+</svg></span>
+        
+      </a>
+    </li>
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm block text-slate-800 dark:text-slate-50  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="https://github.com/toka0x" target="_blank" rel="noopener noreferrer">
+        <span class="sr-only">GitHub</span>
+        
+        <span><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+  stroke-linecap="round" stroke-linejoin="round">
+  <path
+    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+</svg></span>
+        
+      </a>
+    </li>
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm block text-slate-800 dark:text-slate-50  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="https://www.linkedin.com/in/motawkkel-abdulrhman-a2263a1b2/" target="_blank" rel="noopener noreferrer">
+        <span class="sr-only">LinkedIn</span>
+        
+        <span><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+  stroke-linecap="round" stroke-linejoin="round">
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+  <rect x="2" y="9" width="4" height="12" />
+  <circle cx="4" cy="4" r="2" />
+</svg></span>
+        
+      </a>
+    </li>
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm block text-slate-800 dark:text-slate-50  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+        <span class="sr-only">Instagram</span>
+        
+        <span><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+  stroke-linecap="round" stroke-linejoin="round">
+  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+</svg></span>
+        
+      </a>
+    </li>
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm block text-slate-800 dark:text-slate-50  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="tooka172@gmail.com" target="_blank" rel="noopener noreferrer">
+        <span class="sr-only">Email</span>
+        
+        <span><svg class="h-4 w-4" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+  fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" />
+  <rect x="3" y="5" width="18" height="14" rx="2" />
+  <polyline points="3 7 12 13 21 7" />
+</svg></span>
+        
+      </a>
+    </li>
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm block text-slate-800 dark:text-slate-50  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="/articles/index.xml" target="_blank" rel="noopener noreferrer">
+        <span class="sr-only">RSS</span>
+        
+        <span><svg class="h-4 w-4" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+  fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" />
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg></span>
+        
+      </a>
+    </li>
+    
+  </ul>
+</aside>
+
+<div
+  class="fixed bg-slate-700 bg-opacity-5 transition duration-200 ease-in-out inset-0 z-10 pointer-events-auto md:hidden left-0 top-0 w-full h-full hidden menu-overlay">
+</div>
+
+<button
+  aria-label="Toggle Sidebar"
+  class="md:hidden absolute top-3 left-3 z-10 menu-trigger p-1 rounded text-slate-800 dark:text-slate-50 hover:bg-slate-100"><svg class="h-6 w-6" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+  fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" />
+  <line x1="4" y1="6" x2="20" y2="6" />
+  <line x1="4" y1="12" x2="20" y2="12" />
+  <line x1="4" y1="18" x2="16" y2="18" />
+</svg></button><div class="flex-1">
+
+<main class="h-screen overflow-y-auto">
+  <div class="px-6 py-20 w-full lg:w-[580px] mx-auto prose dark:prose-invert h-fit prose-img:mx-auto">
+
+    <h1>N00bz CTF-Reverse Engineering-writeups</h1>
+    
+    <p class="text-sm text-slate-500 !mb-8">June 6, 2022</p>
+    
+
+    <h1 id="challenge-01--xorxorxor">Challenge 01- xorxorxor</h1>
+<p>this is an ELF file that asks for the flag when we execute it:
+<img src="/img/nr1.png" alt="Screenshot1"></p>
+<p>let&rsquo;s use IDA to decompile and see how the flag is checked.</p>
+<p><img src="/img/nr2.png" alt="Screenshot1"></p>
+<p>as we can see above, it will do the steps:</p>
+<ol>
+<li>read up to 23 characters (length of the flag+1).</li>
+<li>uses <mark>var_4</mark> as a counter that is incremented every time and XORed with a flag character.</li>
+<li>compares the final string with the string <strong>n12a~~~7zV;xSyf&lt;Os!``4k</strong>.</li>
+</ol>
+<p>in order to reverse this I wrote the following script:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>s <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;n12a~~~7zV;xSyf&lt;Os!``4k&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">23</span>):
+</span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">print</span>(<span style="color:#8be9fd;font-style:italic">chr</span>(<span style="color:#8be9fd;font-style:italic">ord</span>(s[i])<span style="color:#ff79c6">^</span>i),end<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;&#39;</span>)
+</span></span></code></pre></div><pre tabindex="0"><code>Flag: n00bz{x0r_1s_th3_b3st!}
+</code></pre><h1 id="challenge-02--encryption_with_matrices">Challenge 02- encryption_with_matrices</h1>
+<p>In this challenge we are provided with a python script and a resultant cipher text</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>flag <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;REDACTED&#39;</span>
+</span></span><span style="display:flex;"><span>rand <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;ԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹԹ&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">str_to_matrix</span>(string):
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">2</span>):
+</span></span><span style="display:flex;"><span>        letter <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">ord</span>(string)
+</span></span><span style="display:flex;"><span>        flag_mat <span style="color:#ff79c6">=</span> [letter,letter]
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> flag_mat
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>final_flag_matrix <span style="color:#ff79c6">=</span> []
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> flag:
+</span></span><span style="display:flex;"><span>    final_flag_matrix<span style="color:#ff79c6">.</span>append(str_to_matrix(i))
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>leet_matrix <span style="color:#ff79c6">=</span> []
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> rand:
+</span></span><span style="display:flex;"><span>    leet_matrix<span style="color:#ff79c6">.</span>append(str_to_matrix(i))
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>enc_flag_matrix <span style="color:#ff79c6">=</span> []
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> final_flag_matrix:
+</span></span><span style="display:flex;"><span>        x <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">int</span>(i[<span style="color:#bd93f9">0</span>]) <span style="color:#ff79c6">*</span> <span style="color:#8be9fd;font-style:italic">int</span>(i[<span style="color:#bd93f9">1</span>])
+</span></span><span style="display:flex;"><span>        enc_flag_matrix<span style="color:#ff79c6">.</span>append(x)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>enc_leet_matrix <span style="color:#ff79c6">=</span> []
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> leet_matrix:
+</span></span><span style="display:flex;"><span>    y <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">int</span>(i[<span style="color:#bd93f9">0</span>]) <span style="color:#ff79c6">*</span> <span style="color:#8be9fd;font-style:italic">int</span>(i[<span style="color:#bd93f9">1</span>])
+</span></span><span style="display:flex;"><span>    enc_leet_matrix<span style="color:#ff79c6">.</span>append(y)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">print</span>(<span style="color:#f1fa8c">f</span><span style="color:#f1fa8c">&#39;leet=</span><span style="color:#f1fa8c">{</span>enc_leet_matrix<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">print</span>(<span style="color:#f1fa8c">&#39;=&#39;</span><span style="color:#ff79c6">*</span><span style="color:#bd93f9">80</span>)
+</span></span><span style="display:flex;"><span>final_ct <span style="color:#ff79c6">=</span> []
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#8be9fd;font-style:italic">len</span>(enc_leet_matrix)):
+</span></span><span style="display:flex;"><span>        final_ct<span style="color:#ff79c6">.</span>append(enc_leet_matrix[i]<span style="color:#ff79c6">*</span>enc_flag_matrix[i])
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">print</span>(<span style="color:#f1fa8c">f</span><span style="color:#f1fa8c">&#39;ct=</span><span style="color:#f1fa8c">{</span>final_ct<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">#ct=[21629584900, 4118558976, 4118558976, 17167812676, 26606176996, 27044131401, 5407396225, 19334346304, 4291953169, 23640600025, 16132810225, 23640600025, 17519963769, 19334346304, 4649466969, 21238107289, 4649466969, 16132810225, 24053528464, 4118558976, 4118558976, 20465877481, 16132810225, 21238107289, 4649466969, 16132810225, 21238107289, 4118558976, 23231246724, 4649466969, 16132810225, 24053528464, 19334346304, 4833586576, 21629584900, 16132810225, 18597867876, 4291953169, 24890110756, 4649466969, 16132810225, 19334346304, 4118558976, 24470032041, 23231246724, 23640600025, 16132810225, 24053528464, 4118558976, 16132810225, 21238107289, 4833586576, 20465877481, 4649466969, 16132810225, 4833586576, 21629584900, 17875690000, 16132810225, 5021281321, 16132810225, 21238107289, 4291953169, 21629584900, 24470032041, 24053528464, 4649466969, 23640600025, 16132810225, 24053528464, 4118558976, 16132810225, 23640600025, 4118558976, 20850204816, 24890110756, 4649466969, 16132810225, 25740993600, 8265719056, 8265719056, 27930765625]</span>
+</span></span></code></pre></div><p>after the analysis of this script i was able to know how this actually works:</p>
+<ol>
+<li><mark>final_flag_matrix</mark> and <mark>leet_matrix</mark> are both obtained using <mark>str_to_matrix</mark> function.</li>
+<li><mark>str_to_matrix</mark> just returns a list with 2 elements containing the letter ordinal.</li>
+<li><mark>enc_flag_matrix</mark> and <mark>enc_leet_matrix</mark> are both obtained by multiplying every element by itself (because i[0] and i[1] contains the same value).</li>
+<li>the <mark>final_ct</mark> is obtained by multiplying every element in <mark>enc_flag_matrix</mark> by the corresponding one in <mark>enc_leet_matrix</mark>.</li>
+</ol>
+<p>as we already have the <mark>enc_leet_matrix</mark> (Just run the script once and you&rsquo;ll get it) we can easily decrypt this cipher, I wrote the following script:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">from</span> math <span style="color:#ff79c6">import</span> sqrt
+</span></span><span style="display:flex;"><span>leet<span style="color:#ff79c6">=</span>[<span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>, <span style="color:#bd93f9">1787569</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ct<span style="color:#ff79c6">=</span>[<span style="color:#bd93f9">21629584900</span>, <span style="color:#bd93f9">4118558976</span>, <span style="color:#bd93f9">4118558976</span>, <span style="color:#bd93f9">17167812676</span>, <span style="color:#bd93f9">26606176996</span>, <span style="color:#bd93f9">27044131401</span>, <span style="color:#bd93f9">5407396225</span>, <span style="color:#bd93f9">19334346304</span>, <span style="color:#bd93f9">4291953169</span>, <span style="color:#bd93f9">23640600025</span>, <span style="color:#bd93f9">16132810225</span>, <span style="color:#bd93f9">23640600025</span>, <span style="color:#bd93f9">17519963769</span>, <span style="color:#bd93f9">19334346304</span>, <span style="color:#bd93f9">4649466969</span>, <span style="color:#bd93f9">21238107289</span>, <span style="color:#bd93f9">4649466969</span>, <span style="color:#bd93f9">16132810225</span>, <span style="color:#bd93f9">24053528464</span>, <span style="color:#bd93f9">4118558976</span>, <span style="color:#bd93f9">4118558976</span>, <span style="color:#bd93f9">20465877481</span>, <span style="color:#bd93f9">16132810225</span>, <span style="color:#bd93f9">21238107289</span>, <span style="color:#bd93f9">4649466969</span>, <span style="color:#bd93f9">16132810225</span>, <span style="color:#bd93f9">21238107289</span>, <span style="color:#bd93f9">4118558976</span>, <span style="color:#bd93f9">23231246724</span>, <span style="color:#bd93f9">4649466969</span>, <span style="color:#bd93f9">16132810225</span>, <span style="color:#bd93f9">24053528464</span>, <span style="color:#bd93f9">19334346304</span>, <span style="color:#bd93f9">4833586576</span>, <span style="color:#bd93f9">21629584900</span>, <span style="color:#bd93f9">16132810225</span>, <span style="color:#bd93f9">18597867876</span>, <span style="color:#bd93f9">4291953169</span>, <span style="color:#bd93f9">24890110756</span>, <span style="color:#bd93f9">4649466969</span>, <span style="color:#bd93f9">16132810225</span>, <span style="color:#bd93f9">19334346304</span>, <span style="color:#bd93f9">4118558976</span>, <span style="color:#bd93f9">24470032041</span>, <span style="color:#bd93f9">23231246724</span>, <span style="color:#bd93f9">23640600025</span>, <span style="color:#bd93f9">16132810225</span>, <span style="color:#bd93f9">24053528464</span>, <span style="color:#bd93f9">4118558976</span>, <span style="color:#bd93f9">16132810225</span>, <span style="color:#bd93f9">21238107289</span>, <span style="color:#bd93f9">4833586576</span>, <span style="color:#bd93f9">20465877481</span>, <span style="color:#bd93f9">4649466969</span>, <span style="color:#bd93f9">16132810225</span>, <span style="color:#bd93f9">4833586576</span>, <span style="color:#bd93f9">21629584900</span>, <span style="color:#bd93f9">17875690000</span>, <span style="color:#bd93f9">16132810225</span>, <span style="color:#bd93f9">5021281321</span>, <span style="color:#bd93f9">16132810225</span>, <span style="color:#bd93f9">21238107289</span>, <span style="color:#bd93f9">4291953169</span>, <span style="color:#bd93f9">21629584900</span>, <span style="color:#bd93f9">24470032041</span>, <span style="color:#bd93f9">24053528464</span>, <span style="color:#bd93f9">4649466969</span>, <span style="color:#bd93f9">23640600025</span>, <span style="color:#bd93f9">16132810225</span>, <span style="color:#bd93f9">24053528464</span>, <span style="color:#bd93f9">4118558976</span>, <span style="color:#bd93f9">16132810225</span>, <span style="color:#bd93f9">23640600025</span>, <span style="color:#bd93f9">4118558976</span>, <span style="color:#bd93f9">20850204816</span>, <span style="color:#bd93f9">24890110756</span>, <span style="color:#bd93f9">4649466969</span>, <span style="color:#bd93f9">16132810225</span>, <span style="color:#bd93f9">25740993600</span>, <span style="color:#bd93f9">8265719056</span>, <span style="color:#bd93f9">8265719056</span>, <span style="color:#bd93f9">27930765625</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#8be9fd;font-style:italic">len</span>(ct)):
+</span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">print</span>(<span style="color:#8be9fd;font-style:italic">chr</span>(<span style="color:#8be9fd;font-style:italic">int</span>(sqrt(ct[i]<span style="color:#ff79c6">/</span>leet[i]))),end<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;&#39;</span>)
+</span></span></code></pre></div><pre tabindex="0"><code>Flag: n00bz{7h1s_sch3m3_t00k_m3_m0r3_th4n_f1v3_h0urs_t0_m4k3_4nd_5_m1nut3s_t0_s0lv3_xDD}
+</code></pre><h1 id="challenge-03--rusted">Challenge 03- Rusted</h1>
+<ul>
+<li>this challenge was very easy Idk why was it solved by only 20 people XD.</li>
+</ul>
+<p>for this challenge we get a binary and a text file containing the flag but it&rsquo;s encrypted in some way, and when you run the binary it allows you to enter some characters then encodes and displays them.
+the contents of message.txt are:</p>
+<pre tabindex="0"><code>letter of flag 9430560070627282115
+
+letter of flag 8711072749520663930
+
+letter of flag 8711072749520663930
+
+letter of flag 4680303220831814404
+
+letter of flag 9177864784264774521
+
+letter of flag 14370432302296844161
+
+letter of flag 10876706933096536396
+
+letter of flag 1641124248809936433
+
+letter of flag 7778624499091513472
+
+letter of flag 9919528715426463362
+
+letter of flag 11399395809139327099
+
+letter of flag 10876706933096536396
+
+letter of flag 15080230035883566959
+
+letter of flag 3100520403330787916
+
+letter of flag 15080230035883566959
+
+letter of flag 10876706933096536396
+
+letter of flag 2410296170472410220
+
+letter of flag 13401526571666299780
+
+letter of flag 9430560070627282115
+
+letter of flag 14991883211822224068
+
+letter of flag 11399395809139327099
+
+letter of flag 4680303220831814404
+
+letter of flag 1641124248809936433
+
+letter of flag 9919528715426463362
+
+letter of flag 11399395809139327099
+
+letter of flag 9430560070627282115
+
+letter of flag 8711072749520663930
+
+letter of flag 11564734666458609081
+
+letter of flag 11399395809139327099
+
+letter of flag 16569982846051596422
+
+letter of flag 17912736061507007767
+
+letter of flag 13401526571666299780
+
+letter of flag 12092553686027393261
+
+letter of flag 11399395809139327099
+
+letter of flag 14854574485056723277
+
+letter of flag 11082847621557389877
+
+letter of flag 17912736061507007767
+
+letter of flag 12092553686027393261
+
+letter of flag 12092553686027393261
+
+letter of flag 11399395809139327099
+
+letter of flag 17912736061507007767
+
+letter of flag 2410296170472410220
+
+letter of flag 11399395809139327099
+
+letter of flag 10876706933096536396
+
+letter of flag 15080230035883566959
+
+letter of flag 8432937404534019746
+
+letter of flag 1641124248809936433
+
+letter of flag 15080230035883566959
+
+letter of flag 2410296170472410220
+
+letter of flag 11564734666458609081
+
+letter of flag 15080230035883566959
+
+letter of flag 9016360943569037717
+
+letter of flag 11399395809139327099
+
+letter of flag 4680303220831814404
+
+letter of flag 16090572465429601307
+
+letter of flag 11399395809139327099
+
+letter of flag 363766796468165265
+
+letter of flag 1641124248809936433
+
+letter of flag 7144977204516799495
+
+letter of flag 7778624499091513472
+
+letter of flag 7144977204516799495
+
+letter of flag 10876706933096536396
+
+letter of flag 16272553897485981964
+</code></pre><p>So basically we can either reverse engineer the 10 MB binary and obtain the algorithm (which is a BIG PAIN) or simply let the binary encode all possible letters and numbers and then make a dictionary of them and the corresponding letters, finally find the flag letters.</p>
+<p>this was my final script:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>s <span style="color:#ff79c6">=</span> {<span style="color:#f1fa8c">&#39;a&#39;</span>:<span style="color:#bd93f9">7144977204516799495</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;b&#39;</span>:<span style="color:#bd93f9">4680303220831814404</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;c&#39;</span>:<span style="color:#bd93f9">14854574485056723277</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;d&#39;</span>:<span style="color:#bd93f9">9016360943569037717</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;e&#39;</span>:<span style="color:#bd93f9">9288996555440648771</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;f&#39;</span>:<span style="color:#bd93f9">10886613961911501365</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;g&#39;</span>:<span style="color:#bd93f9">14991883211822224068</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;h&#39;</span>:<span style="color:#bd93f9">11082847621557389877</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;i&#39;</span>:<span style="color:#bd93f9">8098767115281790549</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;j&#39;</span>:<span style="color:#bd93f9">16569982846051596422</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;k&#39;</span>:<span style="color:#bd93f9">14686487834749970899</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;l&#39;</span>:<span style="color:#bd93f9">12092553686027393261</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;m&#39;</span>:<span style="color:#bd93f9">16417988931411928334</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;n&#39;</span>:<span style="color:#bd93f9">9430560070627282115</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;o&#39;</span>:<span style="color:#bd93f9">4354630192292130566</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;p&#39;</span>:<span style="color:#bd93f9">6716708359989895925</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;q&#39;</span>:<span style="color:#bd93f9">8432937404534019746</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;r&#39;</span>:<span style="color:#bd93f9">10876706933096536396</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;s&#39;</span>:<span style="color:#bd93f9">2410296170472410220</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;t&#39;</span>:<span style="color:#bd93f9">11564734666458609081</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;u&#39;</span>:<span style="color:#bd93f9">1641124248809936433</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;v&#39;</span>:<span style="color:#bd93f9">3100520403330787916</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;w&#39;</span>:<span style="color:#bd93f9">2477510535098418509</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;x&#39;</span>:<span style="color:#bd93f9">1831594888791778237</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;y&#39;</span>:<span style="color:#bd93f9">16090572465429601307</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;z&#39;</span>:<span style="color:#bd93f9">9177864784264774521</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;1&#39;</span>:<span style="color:#bd93f9">13401526571666299780</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;2&#39;</span>:<span style="color:#bd93f9">15821950311934020977</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;3&#39;</span>:<span style="color:#bd93f9">15080230035883566959</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;4&#39;</span>:<span style="color:#bd93f9">17912736061507007767</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;5&#39;</span>:<span style="color:#bd93f9">7778624499091513472</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;6&#39;</span>:<span style="color:#bd93f9">10810294657332723507</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;7&#39;</span>:<span style="color:#bd93f9">9919528715426463362</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;8&#39;</span>:<span style="color:#bd93f9">3209422213365730399</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;9&#39;</span>:<span style="color:#bd93f9">13887348327686894507</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;0&#39;</span>:<span style="color:#bd93f9">8711072749520663930</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;_&#39;</span>:<span style="color:#bd93f9">11399395809139327099</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;!&#39;</span>:<span style="color:#bd93f9">5455878505379436227</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;?&#39;</span>:<span style="color:#bd93f9">9127593294263825240</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;}&#39;</span>:<span style="color:#bd93f9">16272553897485981964</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;{&#39;</span>:<span style="color:#bd93f9">14370432302296844161</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#39;Q&#39;</span>:<span style="color:#bd93f9">363766796468165265</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>flag <span style="color:#ff79c6">=</span> [<span style="color:#bd93f9">9430560070627282115</span>,<span style="color:#bd93f9">8711072749520663930</span>,<span style="color:#bd93f9">8711072749520663930</span>,<span style="color:#bd93f9">4680303220831814404</span>,<span style="color:#bd93f9">9177864784264774521</span>,<span style="color:#bd93f9">14370432302296844161</span>,<span style="color:#bd93f9">10876706933096536396</span>,<span style="color:#bd93f9">1641124248809936433</span>,<span style="color:#bd93f9">7778624499091513472</span>,<span style="color:#bd93f9">9919528715426463362</span>,<span style="color:#bd93f9">11399395809139327099</span>,<span style="color:#bd93f9">10876706933096536396</span>,<span style="color:#bd93f9">15080230035883566959</span>,<span style="color:#bd93f9">3100520403330787916</span>,<span style="color:#bd93f9">15080230035883566959</span>,<span style="color:#bd93f9">10876706933096536396</span>,<span style="color:#bd93f9">2410296170472410220</span>,<span style="color:#bd93f9">13401526571666299780</span>,<span style="color:#bd93f9">9430560070627282115</span>,<span style="color:#bd93f9">14991883211822224068</span>,<span style="color:#bd93f9">11399395809139327099</span>,<span style="color:#bd93f9">4680303220831814404</span>,<span style="color:#bd93f9">1641124248809936433</span>,<span style="color:#bd93f9">9919528715426463362</span>,<span style="color:#bd93f9">11399395809139327099</span>,<span style="color:#bd93f9">9430560070627282115</span>,<span style="color:#bd93f9">8711072749520663930</span>,<span style="color:#bd93f9">11564734666458609081</span>,<span style="color:#bd93f9">11399395809139327099</span>,<span style="color:#bd93f9">16569982846051596422</span>,<span style="color:#bd93f9">17912736061507007767</span>,<span style="color:#bd93f9">13401526571666299780</span>,<span style="color:#bd93f9">12092553686027393261</span>,<span style="color:#bd93f9">11399395809139327099</span>,<span style="color:#bd93f9">14854574485056723277</span>,<span style="color:#bd93f9">11082847621557389877</span>,<span style="color:#bd93f9">17912736061507007767</span>,<span style="color:#bd93f9">12092553686027393261</span>,<span style="color:#bd93f9">12092553686027393261</span>,<span style="color:#bd93f9">11399395809139327099</span>,<span style="color:#bd93f9">17912736061507007767</span>,<span style="color:#bd93f9">2410296170472410220</span>,<span style="color:#bd93f9">11399395809139327099</span>,<span style="color:#bd93f9">10876706933096536396</span>,<span style="color:#bd93f9">15080230035883566959</span>,<span style="color:#bd93f9">8432937404534019746</span>,<span style="color:#bd93f9">1641124248809936433</span>,<span style="color:#bd93f9">15080230035883566959</span>,<span style="color:#bd93f9">2410296170472410220</span>,<span style="color:#bd93f9">11564734666458609081</span>,<span style="color:#bd93f9">15080230035883566959</span>,<span style="color:#bd93f9">9016360943569037717</span>,<span style="color:#bd93f9">11399395809139327099</span>,<span style="color:#bd93f9">4680303220831814404</span>,<span style="color:#bd93f9">16090572465429601307</span>,<span style="color:#bd93f9">11399395809139327099</span>,<span style="color:#bd93f9">363766796468165265</span>,<span style="color:#bd93f9">1641124248809936433</span>,<span style="color:#bd93f9">7144977204516799495</span>,<span style="color:#bd93f9">7778624499091513472</span>,<span style="color:#bd93f9">7144977204516799495</span>,<span style="color:#bd93f9">10876706933096536396</span>,<span style="color:#bd93f9">16272553897485981964</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">get_key</span>(val):
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> key, value <span style="color:#ff79c6">in</span> s<span style="color:#ff79c6">.</span>items():
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> val <span style="color:#ff79c6">==</span> value:
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">return</span> key
+</span></span><span style="display:flex;"><span>          
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> flag:
+</span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">print</span>(get_key(i),end<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;&#39;</span>)
+</span></span></code></pre></div><pre tabindex="0"><code>Flag: n00bz{ru57_r3v3rs1ng_bu7_n0t_j41l_ch4ll_4s_r3qu3st3d_by_Qua5ar}
+</code></pre><h1 id="challenge-04--unknown-language">Challenge 04- Unknown Language</h1>
+<p>this challenge gives us a disassembled python code and a result.txt file which has the encrypted flag.
+disassembled code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>  <span style="color:#bd93f9">2</span>           <span style="color:#bd93f9">0</span> LOAD_NAME                <span style="color:#bd93f9">0</span> (<span style="color:#8be9fd;font-style:italic">open</span>)
+</span></span><span style="display:flex;"><span>              <span style="color:#bd93f9">2</span> LOAD_CONST               <span style="color:#bd93f9">0</span> (<span style="color:#f1fa8c">&#39;flag.txt&#39;</span>)
+</span></span><span style="display:flex;"><span>              <span style="color:#bd93f9">4</span> CALL_FUNCTION            <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#bd93f9">6</span> LOAD_METHOD              <span style="color:#bd93f9">1</span> (read)
+</span></span><span style="display:flex;"><span>              <span style="color:#bd93f9">8</span> CALL_METHOD              <span style="color:#bd93f9">0</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">10</span> STORE_NAME               <span style="color:#bd93f9">2</span> (flag)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#bd93f9">3</span>          <span style="color:#bd93f9">12</span> LOAD_NAME                <span style="color:#bd93f9">0</span> (<span style="color:#8be9fd;font-style:italic">open</span>)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">14</span> LOAD_CONST               <span style="color:#bd93f9">1</span> (<span style="color:#f1fa8c">&#39;results.txt&#39;</span>)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">16</span> LOAD_CONST               <span style="color:#bd93f9">2</span> (<span style="color:#f1fa8c">&#39;w&#39;</span>)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">18</span> CALL_FUNCTION            <span style="color:#bd93f9">2</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">20</span> STORE_NAME               <span style="color:#bd93f9">3</span> (f)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#bd93f9">4</span>          <span style="color:#bd93f9">22</span> LOAD_NAME                <span style="color:#bd93f9">4</span> (<span style="color:#8be9fd;font-style:italic">range</span>)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">24</span> LOAD_NAME                <span style="color:#bd93f9">5</span> (<span style="color:#8be9fd;font-style:italic">len</span>)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">26</span> LOAD_NAME                <span style="color:#bd93f9">2</span> (flag)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">28</span> CALL_FUNCTION            <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">30</span> CALL_FUNCTION            <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">32</span> GET_ITER
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&gt;&gt;</span>   <span style="color:#bd93f9">34</span> FOR_ITER                <span style="color:#bd93f9">96</span> (to <span style="color:#bd93f9">132</span>)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">36</span> STORE_NAME               <span style="color:#bd93f9">6</span> (i)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#bd93f9">5</span>          <span style="color:#bd93f9">38</span> LOAD_NAME                <span style="color:#bd93f9">7</span> (<span style="color:#8be9fd;font-style:italic">input</span>)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">40</span> LOAD_CONST               <span style="color:#bd93f9">3</span> (<span style="color:#f1fa8c">&#39;Enter the flag: </span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#39;</span>)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">42</span> CALL_FUNCTION            <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">44</span> STORE_NAME               <span style="color:#bd93f9">8</span> (x)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#bd93f9">6</span>          <span style="color:#bd93f9">46</span> LOAD_NAME                <span style="color:#bd93f9">3</span> (f)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">48</span> LOAD_METHOD              <span style="color:#bd93f9">9</span> (write)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">50</span> LOAD_NAME               <span style="color:#bd93f9">10</span> (<span style="color:#8be9fd;font-style:italic">str</span>)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">52</span> LOAD_CONST               <span style="color:#bd93f9">4</span> (<span style="color:#bd93f9">5</span>)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">54</span> LOAD_NAME               <span style="color:#bd93f9">11</span> (<span style="color:#8be9fd;font-style:italic">ord</span>)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">56</span> LOAD_NAME                <span style="color:#bd93f9">2</span> (flag)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">58</span> LOAD_NAME                <span style="color:#bd93f9">6</span> (i)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">60</span> BINARY_SUBSCR
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">62</span> CALL_FUNCTION            <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">64</span> BINARY_POWER
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">66</span> LOAD_NAME               <span style="color:#bd93f9">12</span> (<span style="color:#8be9fd;font-style:italic">int</span>)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">68</span> LOAD_NAME                <span style="color:#bd93f9">8</span> (x)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">70</span> CALL_FUNCTION            <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">72</span> BINARY_SUBTRACT
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">74</span> CALL_FUNCTION            <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">76</span> LOAD_CONST               <span style="color:#bd93f9">5</span> (<span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#39;</span>)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">78</span> BINARY_ADD
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">80</span> CALL_METHOD              <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">82</span> POP_TOP
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#bd93f9">7</span>          <span style="color:#bd93f9">84</span> LOAD_CONST               <span style="color:#bd93f9">4</span> (<span style="color:#bd93f9">5</span>)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">86</span> LOAD_NAME               <span style="color:#bd93f9">11</span> (<span style="color:#8be9fd;font-style:italic">ord</span>)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">88</span> LOAD_NAME                <span style="color:#bd93f9">2</span> (flag)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">90</span> LOAD_NAME                <span style="color:#bd93f9">6</span> (i)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">92</span> BINARY_SUBSCR
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">94</span> CALL_FUNCTION            <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">96</span> BINARY_POWER
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">98</span> LOAD_NAME               <span style="color:#bd93f9">12</span> (<span style="color:#8be9fd;font-style:italic">int</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#bd93f9">100</span> LOAD_NAME                <span style="color:#bd93f9">8</span> (x)
+</span></span><span style="display:flex;"><span>            <span style="color:#bd93f9">102</span> CALL_FUNCTION            <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#bd93f9">104</span> BINARY_SUBTRACT
+</span></span><span style="display:flex;"><span>            <span style="color:#bd93f9">106</span> LOAD_CONST               <span style="color:#bd93f9">6</span> (<span style="color:#bd93f9">0</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#bd93f9">108</span> COMPARE_OP               <span style="color:#bd93f9">2</span> (<span style="color:#ff79c6">==</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#bd93f9">110</span> POP_JUMP_IF_FALSE       <span style="color:#bd93f9">34</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#bd93f9">8</span>         <span style="color:#bd93f9">112</span> LOAD_NAME               <span style="color:#bd93f9">13</span> (<span style="color:#8be9fd;font-style:italic">print</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#bd93f9">114</span> LOAD_CONST               <span style="color:#bd93f9">7</span> (<span style="color:#f1fa8c">&#39;Correct letter &#39;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#bd93f9">116</span> LOAD_NAME                <span style="color:#bd93f9">2</span> (flag)
+</span></span><span style="display:flex;"><span>            <span style="color:#bd93f9">118</span> LOAD_NAME                <span style="color:#bd93f9">6</span> (i)
+</span></span><span style="display:flex;"><span>            <span style="color:#bd93f9">120</span> BINARY_SUBSCR
+</span></span><span style="display:flex;"><span>            <span style="color:#bd93f9">122</span> FORMAT_VALUE             <span style="color:#bd93f9">0</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#bd93f9">124</span> BUILD_STRING             <span style="color:#bd93f9">2</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#bd93f9">126</span> CALL_FUNCTION            <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#bd93f9">128</span> POP_TOP
+</span></span><span style="display:flex;"><span>            <span style="color:#bd93f9">130</span> JUMP_ABSOLUTE           <span style="color:#bd93f9">34</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&gt;&gt;</span>  <span style="color:#bd93f9">132</span> LOAD_CONST               <span style="color:#bd93f9">8</span> (<span style="color:#ff79c6">None</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#bd93f9">134</span> RETURN_VALUE
+</span></span></code></pre></div><p>result.txt:</p>
+<pre tabindex="0"><code>77037197775489434122239117703397092741524065928615527809597551822662353515620,3552713678800500929355621337890620,3552713678800500929355621337890620,315544362088404722164691426113114491869282574043609201908111572265620,18807909613156600127499784595555930845098648908353400344140027300454676151275634765620,94039548065783000637498922977779654225493244541767001720700136502273380756378173828120,48148248609680896326399448564623182963452541205384704880998469889163970947265620,39443045261050590270586428264139311483660321755451150238513946533203120,30092655381050560203999655352889489352157838253365440550624043680727481842041015620,444089209850062616169452667236328120,240741243048404481631997242823115914817262706026923524404992349445819854736328120,17763568394002504646778106689453120,77037197775489434122239117703397092741524065928615527809597551822662353515620,986076131526264756764660706603482787091508043886278755962848663330078120,2524354896707237777317531408904915934954260592348873615264892578120,150463276905252801019998276764447446760789191266827202753120218403637409210205078120,17763568394002504646778106689453120,1203706215242022408159986214115579574086313530134617622024961747229099273681640620,4930380657631323783823303533017413935457540219431393779814243316650390620,2524354896707237777317531408904915934954260592348873615264892578120,3081487911019577364889564708135883709660962637144621112383902072906494140620,3552713678800500929355621337890620,986076131526264756764660706603482787091508043886278755962848663330078120,63108872417680944432938285222622898373856514808721840381622314453120,48148248609680896326399448564623182963452541205384704880998469889163970947265620,17763568394002504646778106689453120,1203706215242022408159986214115579574086313530134617622024961747229099273681640620,4930380657631323783823303533017413935457540219431393779814243316650390620,15407439555097886824447823540679418548304813185723105561919510364532470703120,240741243048404481631997242823115914817262706026923524404992349445819854736328120,2524354896707237777317531408904915934954260592348873615264892578120,150463276905252801019998276764447446760789191266827202753120218403637409210205078120,4930380657631323783823303533017413935457540219431393779814243316650390620,2220446049250313080847263336181640620,1203706215242022408159986214115579574086313530134617622024961747229099273681640620,108420217248550443400745280086994171142578120,2350988701644575015937473074444491355637331113544175043017503412556834518909454345703120
+</code></pre><p>getting back to the code we can notice a pattern:</p>
+<ul>
+<li>read[ flag.txt ], open[ results.txt ], input[ x ], range[means it is using a loop], write[ resultx.txt ]</li>
+</ul>
+<p>so from our general understanding of the code we can assume that it open <mark>flag.txt</mark> reads it, loops through the letters and perform some operations on flag characters, stores the result in <mark>result.txt</mark>.</p>
+<p>what we need to know now is how are the letters encoded?</p>
+<p>if we take a look at these lines of code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>  <span style="color:#bd93f9">6</span>          <span style="color:#bd93f9">46</span> LOAD_NAME                <span style="color:#bd93f9">3</span> (f)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">48</span> LOAD_METHOD              <span style="color:#bd93f9">9</span> (write)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">50</span> LOAD_NAME               <span style="color:#bd93f9">10</span> (<span style="color:#8be9fd;font-style:italic">str</span>)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">52</span> LOAD_CONST               <span style="color:#bd93f9">4</span> (<span style="color:#bd93f9">5</span>)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">54</span> LOAD_NAME               <span style="color:#bd93f9">11</span> (<span style="color:#8be9fd;font-style:italic">ord</span>)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">56</span> LOAD_NAME                <span style="color:#bd93f9">2</span> (flag)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">58</span> LOAD_NAME                <span style="color:#bd93f9">6</span> (i)
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">60</span> BINARY_SUBSCR
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">62</span> CALL_FUNCTION            <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#bd93f9">64</span> BINARY_POWER
+</span></span></code></pre></div><ul>
+<li>this is the code for writing the encoded values to <strong>result.txt</strong>.</li>
+</ul>
+<p>what it is doing is that it takes the flag letter indexed by <mark>i</mark> which is the counter and perform the following operation:</p>
+<ul>
+<li>5**flag[i].</li>
+<li>how I knew this was a power? take a look at line 64 <strong>BINARY_POWER</strong>.</li>
+</ul>
+<p>and then writes the number to result.txt.</p>
+<p>so to obtain the flag I wrote the script:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">from</span> math <span style="color:#ff79c6">import</span> log
+</span></span><span style="display:flex;"><span>s <span style="color:#ff79c6">=</span> [<span style="color:#bd93f9">77037197775489434122239117703397092741524065928615527809597551822662353515620</span>,<span style="color:#bd93f9">3552713678800500929355621337890620</span>,<span style="color:#bd93f9">3552713678800500929355621337890620</span>,<span style="color:#bd93f9">315544362088404722164691426113114491869282574043609201908111572265620</span>,<span style="color:#bd93f9">18807909613156600127499784595555930845098648908353400344140027300454676151275634765620</span>,<span style="color:#bd93f9">94039548065783000637498922977779654225493244541767001720700136502273380756378173828120</span>,<span style="color:#bd93f9">48148248609680896326399448564623182963452541205384704880998469889163970947265620</span>,<span style="color:#bd93f9">39443045261050590270586428264139311483660321755451150238513946533203120</span>,<span style="color:#bd93f9">30092655381050560203999655352889489352157838253365440550624043680727481842041015620</span>,<span style="color:#bd93f9">444089209850062616169452667236328120</span>,<span style="color:#bd93f9">240741243048404481631997242823115914817262706026923524404992349445819854736328120</span>,<span style="color:#bd93f9">17763568394002504646778106689453120</span>,<span style="color:#bd93f9">77037197775489434122239117703397092741524065928615527809597551822662353515620</span>,<span style="color:#bd93f9">986076131526264756764660706603482787091508043886278755962848663330078120</span>,<span style="color:#bd93f9">2524354896707237777317531408904915934954260592348873615264892578120</span>,<span style="color:#bd93f9">150463276905252801019998276764447446760789191266827202753120218403637409210205078120</span>,<span style="color:#bd93f9">17763568394002504646778106689453120</span>,<span style="color:#bd93f9">1203706215242022408159986214115579574086313530134617622024961747229099273681640620</span>,<span style="color:#bd93f9">4930380657631323783823303533017413935457540219431393779814243316650390620</span>,<span style="color:#bd93f9">2524354896707237777317531408904915934954260592348873615264892578120</span>,<span style="color:#bd93f9">3081487911019577364889564708135883709660962637144621112383902072906494140620</span>,<span style="color:#bd93f9">3552713678800500929355621337890620</span>,<span style="color:#bd93f9">986076131526264756764660706603482787091508043886278755962848663330078120</span>,<span style="color:#bd93f9">63108872417680944432938285222622898373856514808721840381622314453120</span>,<span style="color:#bd93f9">48148248609680896326399448564623182963452541205384704880998469889163970947265620</span>,<span style="color:#bd93f9">17763568394002504646778106689453120</span>,<span style="color:#bd93f9">1203706215242022408159986214115579574086313530134617622024961747229099273681640620</span>,<span style="color:#bd93f9">4930380657631323783823303533017413935457540219431393779814243316650390620</span>,<span style="color:#bd93f9">15407439555097886824447823540679418548304813185723105561919510364532470703120</span>,<span style="color:#bd93f9">240741243048404481631997242823115914817262706026923524404992349445819854736328120</span>,<span style="color:#bd93f9">2524354896707237777317531408904915934954260592348873615264892578120</span>,<span style="color:#bd93f9">150463276905252801019998276764447446760789191266827202753120218403637409210205078120</span>,<span style="color:#bd93f9">4930380657631323783823303533017413935457540219431393779814243316650390620</span>,<span style="color:#bd93f9">2220446049250313080847263336181640620</span>,<span style="color:#bd93f9">1203706215242022408159986214115579574086313530134617622024961747229099273681640620</span>,<span style="color:#bd93f9">108420217248550443400745280086994171142578120</span>,<span style="color:#bd93f9">2350988701644575015937473074444491355637331113544175043017503412556834518909454345703120</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> s:
+</span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">print</span>(<span style="color:#8be9fd;font-style:italic">chr</span>(<span style="color:#8be9fd;font-style:italic">int</span>(log(i,<span style="color:#bd93f9">5</span>))),end<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;&#39;</span>)
+</span></span></code></pre></div><pre tabindex="0"><code>Flag: n00bz{rev3s1ng_w1th_l0gar1thms_wh4t?}
+</code></pre><h1 id="challenge-05--cookie--clicker">Challenge 05- Cookie  Clicker</h1>
+<p>this is some sort of a game where we need to have as much clicks we can on the cookie button.</p>
+<p><img src="/img/nr3.png" alt="Screenshot1"></p>
+<p>I was quite confused at the beginning and didn&rsquo;t know how can I get the flag or what should I do?, but after I saw the description I got a clear idea in my head about the process of solving this</p>
+<pre tabindex="0"><code>Description: I wanna reach a million cookies!
+</code></pre><p>HMMMMMMMMMMM, but I can&rsquo;t click a million time on the cookie!</p>
+<p>when I run the binary for the first time I noticed that it drops an excel file that contains the statistics for the player.
+<img src="/img/nr4.png" alt="Screenshot1"></p>
+<p>I immediately thought of changing the clicks value to a large number then re-opened the game.
+<img src="/img/nr5.png" alt="Screenshot1"></p>
+<p>and fair enought! I got a base64 encrypted flag!</p>
+<pre tabindex="0"><code>Flag: n00bz{YummyC00kiez}
+</code></pre>
+  </div>
+</main>
+
+
+  </div>
+<script type="text/javascript" src="/main.js" defer></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-PROPERTY_ID', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+</body>
+
+</html>

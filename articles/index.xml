@@ -6,7 +6,18 @@
     <description>Recent content in Articles on CHROLLO BLOG!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 May 2022 14:35:18 -0400</lastBuildDate><atom:link href="https://0xchrollo.github.io/articles/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 06 Jun 2022 13:47:28 -0400</lastBuildDate><atom:link href="https://0xchrollo.github.io/articles/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>N00bz CTF-Reverse Engineering-writeups</title>
+      <link>https://0xchrollo.github.io/articles/n00bz_ctf_reverse_writeups/</link>
+      <pubDate>Mon, 06 Jun 2022 13:47:28 -0400</pubDate>
+      
+      <guid>https://0xchrollo.github.io/articles/n00bz_ctf_reverse_writeups/</guid>
+      <description>Challenge 01- xorxorxor this is an ELF file that asks for the flag when we execute it: let&amp;rsquo;s use IDA to decompile and see how the flag is checked.
+as we can see above, it will do the steps:
+ read up to 23 characters (length of the flag+1). uses var_4 as a counter that is incremented every time and XORed with a flag character. compares the final string with the string n12a~~~7zV;xSyf&amp;lt;Os!</description>
+    </item>
+    
     <item>
       <title>1. BRBBOT - In depth analysis</title>
       <link>https://0xchrollo.github.io/articles/brbbbot/</link>
