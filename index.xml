@@ -8,6 +8,19 @@
     <language>en-us</language>
     <lastBuildDate>Sun, 29 May 2022 13:47:28 -0400</lastBuildDate><atom:link href="https://0xchrollo.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Unpacking Kovter malware</title>
+      <link>https://0xchrollo.github.io/articles/unpacking-kovter-malware/</link>
+      <pubDate>Fri, 17 Jun 2022 20:35:18 -0400</pubDate>
+      
+      <guid>https://0xchrollo.github.io/articles/unpacking-kovter-malware/</guid>
+      <description>Sample:
+40050153DCEEC2C8FBB1912F8EEABE449D1E265F0C8198008BE8B34E5403E731 Behaviour analysis this malware uses a highly sophisticated way of unpacking, I&amp;rsquo;ll be demonstrating how to fully unpack it and extract the second stage of it.
+let&amp;rsquo;s start by dynamically analysing this sample, fire up ProcMon and execute the sample.
+after capturing events with ProcMon, save it to a CSV file and load it to ProcDot, it will look like this.
+this is a lot of output!, what we need to focus on are the red colored event.</description>
+    </item>
+    
+    <item>
       <title>N00bz CTF-Reverse Engineering-writeups</title>
       <link>https://0xchrollo.github.io/articles/n00bz_ctf_reverse_writeups/</link>
       <pubDate>Mon, 06 Jun 2022 13:47:28 -0400</pubDate>
@@ -16,17 +29,6 @@
       <description>Challenge 01- xorxorxor this is an ELF file that asks for the flag when we execute it: let&amp;rsquo;s use IDA to decompile and see how the flag is checked.
 as we can see above, it will do the steps:
  read up to 23 characters (length of the flag+1). uses var_4 as a counter that is incremented every time and XORed with a flag character. compares the final string with the string n12a~~~7zV;xSyf&amp;lt;Os!</description>
-    </item>
-    
-    <item>
-      <title>1. BRBBOT - In depth analysis</title>
-      <link>https://0xchrollo.github.io/articles/brbbbot/</link>
-      <pubDate>Sun, 29 May 2022 14:35:18 -0400</pubDate>
-      
-      <guid>https://0xchrollo.github.io/articles/brbbbot/</guid>
-      <description>Sample:
-F47060D0F7DE5EE651878EB18DD2D24B5003BDB03EF4F49879F448F05034A21E This is a fairly simple malware sample that can be a great start for beginners in Malware Analysis! As it combines different kinds of techniques and at the same time a simple implementation, So let&amp;rsquo;s start digging into it! 🔥.
-Extracting Strings I prefer always to start by viewing the strings as it gives me a general insight on what this sample is doing the information we get from this screenshot is that:</description>
     </item>
     
     <item>
@@ -40,6 +42,17 @@ Extracting Strings I prefer always to start by viewing the strings as it gives m
  I Studay at SUST [Electrical Engineering]
     I am currently working as a Cyber Securiy Analysit @ CyberTalents. Mainly skilled at DFIR &amp;amp; Malware Analysis.
  </description>
+    </item>
+    
+    <item>
+      <title>BRBBOT - In depth analysis</title>
+      <link>https://0xchrollo.github.io/articles/brbbbot/</link>
+      <pubDate>Sun, 29 May 2022 14:35:18 -0400</pubDate>
+      
+      <guid>https://0xchrollo.github.io/articles/brbbbot/</guid>
+      <description>Sample:
+F47060D0F7DE5EE651878EB18DD2D24B5003BDB03EF4F49879F448F05034A21E This is a fairly simple malware sample that can be a great start for beginners in Malware Analysis! As it combines different kinds of techniques and at the same time a simple implementation, So let&amp;rsquo;s start digging into it! 🔥.
+Extracting Strings I prefer always to start by viewing the strings as it gives me a general insight on what this sample is doing the information we get from this screenshot is that:</description>
     </item>
     
   </channel>
